@@ -8,12 +8,8 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-install gd zip
 
-# disable conflicting MPM
-RUN a2dismod mpm_event || true
-
-# ensure prefork is enabled
-# RUN a2enmod mpm_prefork
-
+RUN a2dismod mpm_event mpm_worker || true
+RUN a2enmod mpm_prefork
 RUN a2enmod rewrite
 
 WORKDIR /var/www/html
@@ -21,7 +17,5 @@ WORKDIR /var/www/html
 COPY . /var/www/html
 
 RUN chown -R www-data:www-data /var/www/html
-
-CMD ["bash", "-lc", "\ set -eux; \ a2dismod mpm_event mpm_worker || true; \ rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.* || true; \ a2enmod mpm_prefork; \ apache2ctl -t; \ exec apache2-foreground \ "]
 
 EXPOSE 80
