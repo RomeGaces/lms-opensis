@@ -22,4 +22,4 @@ RUN chmod +x /start.sh
 
 CMD ["/start.sh"]
 
-EXPOSE 80
+EXPOSE 8080
