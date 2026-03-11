@@ -26,10 +26,12 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #***************************************************************************************
+error_reporting(E_ERROR)
 include '../functions/ParamLibFnc.php';
 require_once("../functions/PragRepFnc.php");
 session_start();
 
+$err = ''
 $_SESSION['username'] = $_POST["addusername"];
 $_SESSION['password'] = $_POST["addpassword"];
 $_SESSION['server'] = $_POST["server"];
@@ -79,7 +81,7 @@ $err .= '<!DOCTYPE html>
                             <div class="installation-steps">
 
                                 <h2 class="text-center">Couldn\'t connect to database server: ' . $_SESSION['host'].'</h2><br/>';
-                                if (clean_param($_REQUEST['mod'], PARAM_ALPHAMOD) == 'upgrade') {
+                                if (clean_param($_REQUEST['mod'] ?? '', PARAM_ALPHAMOD) == 'upgrade') {
                                     $err .= '<p class="text-center"><a href="Step1.php?mod=upgrade" class="btn btn-primary"><i class="fa fa-refresh"></i> Try Again</a></p>';
                                 } else {
                                     $err .= '<p class="text-center"><a href="Step1.php" class="btn btn-primary"><i class="fa fa-refresh"></i> Try Again</a></p>';
@@ -165,7 +167,7 @@ $sess_data = base64_encode(json_encode([
     'host' => $_SESSION['host']
 ]));
 
-if (clean_param($_REQUEST['mod'], PARAM_ALPHAMOD) == 'upgrade') {
+if (clean_param($_REQUEST['mod'] ?? '', PARAM_ALPHAMOD) == 'upgrade') {
     header('Location: Selectdb.php?sd=' . urlencode($sess_data));
 } else {
     header('Location: Step2.php?sd=' . urlencode($sess_data));
