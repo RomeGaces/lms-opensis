@@ -31,7 +31,7 @@ include '../functions/ParamLibFnc.php';
 require_once("../functions/PragRepFnc.php");
 session_start();
 
-$err = ''
+$err = '';
 $_SESSION['username'] = $_POST["addusername"];
 $_SESSION['password'] = $_POST["addpassword"];
 $_SESSION['server'] = $_POST["server"];
