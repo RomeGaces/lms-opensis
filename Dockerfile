@@ -7,6 +7,9 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql gd zip
 
 RUN a2enmod rewrite
 
+# change apache port to 8080
+RUN sed -i 's/80/8080/g' /etc/apache2/ports.conf /etc/apache2/sites-enabled/000-default.conf
+
 WORKDIR /var/www/html
 
 COPY . /var/www/html
