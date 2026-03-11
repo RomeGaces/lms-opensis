@@ -13,4 +13,10 @@ COPY . /var/www/html
 
 RUN chown -R www-data:www-data /var/www/html
 
+# add start script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+CMD ["/start.sh"]
+
 EXPOSE 80
